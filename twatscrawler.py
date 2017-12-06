@@ -5,7 +5,7 @@ import requests
 from HTMLParser import HTMLParser
 import datetime 
 import calendar
-from yahoo_finance import Share
+#from yahoo_finance import Share
 import time
 
 iden = []
@@ -25,7 +25,6 @@ def getTwats(ticker):
     return twts
         
 if __name__ == "__main__":
-    '''
     today = ""
     tomo  = ""
 
@@ -35,12 +34,12 @@ if __name__ == "__main__":
     else:
         today, tomo = el.makeNasdaqUrl()
         stocks = el.getDaysEarningsNasdaq(today, True) + el.getDaysEarningsNasdaq(tomo, False)
-    '''
-    
+       
     while(1):
-        twts = getTwats('sq')
-        for x in twts:
-            print x
+        for stock in stocks:
+            twts = getTwats(stock)
+            for x in twts:
+                print x
         time.sleep(360) #waits for 5 minutes
 
     '''

@@ -1,0 +1,15 @@
+Severn Blend
+IC470
+
+Fumiya DuFresne
+
+earningsList.py
+This program gathers list of companies reporting earnings after market close that day, and before market open the following day. The data is gathered from the Nasdaq earnings calendar. The default threashold for market cap is set at 25 billion.
+
+twatscrawler.py
+This program fetches posts by users on a given stock on Stocktwits. The program currently fetches twits every five minutes for each stock in the list gathered by earningsList.py. 
+
+Both programs are run by the usual python command
+python earningsList.py
+python twatscrawler.py
+

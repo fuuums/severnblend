@@ -6,7 +6,7 @@ import requests
 from HTMLParser import HTMLParser
 import datetime 
 import calendar
-from yahoo_finance import Share
+#from yahoo_finance import Share
 
 def makeNasdaqUrl():
     day    = datetime.date.today()
