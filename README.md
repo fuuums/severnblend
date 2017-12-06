@@ -1,2 +1,0 @@
-# severnblend
-capstone project
