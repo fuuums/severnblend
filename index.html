@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<style>
+html{ height: 100%; }
+body{
+    min-height: 100%;
+    /*background-color: #4B0082;*/
+    /*background: red; /* For browsers that do not support gradients */
+    background: linear-gradient(to bottom right, #4B0082, yellow); /* Standard syntax (must be last) */
+}
+</style>
+<body>
+  <h1 align="center"><img src="https://i.ebayimg.com/images/g/99kAAOSw8lBTpbSW/s-l300.jpg"></h1>
+  <h2 align="center">SEVERN BLEND ANOTATOR</h2>
+
+  <form method="post" action="getTickers.php">
+    <label for="cap">Find Reporting Companies:</label>
+    <br><br>
+    <input type="text" name="MinCap" size="25" id="cap"
+           maxlength="30" placeholder="Minimum Cap (Millions)">
+    <br>
+    <input type="text" name="MaxCap" size="25" id="cap"
+           maxlength="30" placeholder="Maximum Cap (Millions)">
+
+    <input type="hidden" name="type" value="class">
+    <input type="hidden" name="event" value="4">
+    <br><br>
+    <input type="submit" value="Submit">
+    <input type="reset" value="Clear">
+  </form>
+
+  <!-- <form method = "post" action="/getTickers.php" onsubmit="return getCaps()">
+    Enter Max Market Cap (In Millions): <input type="text" id="MaxCap" size="10" name="MaxCap">
+    <br><br>
+    Enter Min Market Cap (In Millions): <input type="text" id="MinCap" size="10" name="MinCap">
+    <br><br>
+    <input type="submit" value="Submit">
+  </form> -->
+
+
+<!-- Gets market cap max and min to return tickers -->
+<script>
+
+  function getCaps() {
+    var minCap = document.getElementById("MinCap").value;
+    var maxCap = document.getElementById("MaxCap").value;
+
+    if(isNaN(minCap) || isNaN(maxCap)) alert("Enter Number");
+
+  }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!-- php annotator -->
+<!-- table = annotated_Data -->
+<!-- columns = publicThought (comment/text)-->
+<!-- classification = int (that will be put in as we annotate) -->
+<!-- 's currently show up as &65533; need to fix this for classifier -->
+
+<!DOCTYPE html>
+<html>
+<body>
+  <h1 align="center">SEVERN BLEND ANNOTATOR</h1>
+  <!-- <h2 align="center" style="color:red;">UNDER CONSTRUCTION DO NOT TOUCH!!</h2> -->
+
+<p align="center">Contains SQL Database to create annotators for classifiers.<br><br><br></p>
+
+<script>
+  var tweet = "";
+
+  //print tweet to screen without trailing ID
+  function parseID(str) {
+    var parseStr = str.split(" ");
+    var retStr = "";
+
+    //starts at 1 to account for random ID being printed
+    for(i=1;i<parseStr.length;i++)  retStr = retStr + parseStr[i] + " ";
+    return retStr;
+  }
+
+  var xhttp = new XMLHttpRequest();
+
+  // Define what will happen when the information is received back from
+  // the page that we called.  Remember that we will always be doing
+  // Ajax calls asynchronously (meaning we don't just sit there and
+  // wait for the response back from the server as that woould kill
+  // the user experience).  When a response is received from the website
+  // And that response has a code of 200 (success) then we have received
+  // the final response from the URL we called.
+  xhttp.onreadystatechange = function() {
+
+    // We have received all of the information back from the URL
+    // And the page told us it was successful.
+    if (this.readyState == 4 && this.status == 200) {
+
+       // The results from the URL we called are returned in the
+       // STRING xhttp.responseText, we will need to process that
+       // string to make the information useful.  If the string
+       // was a JSON encoded string, I suggest you review JSON.parse()
+
+       // In this example, we are placing the results into the HTML
+       // tag identified by "demo"
+       tweet = xhttp.responseText;
+       document.getElementById("Tweet").innerHTML = parseID(tweet);
+    }
+  };
+
+  xhttp.open("GET", "fetch.php", true);
+  // Send the request to the URL, and when the response is received, the
+  // onreadystatechange function we defined above will be called.
+  xhttp.send();
+
+</script>
+
+<p align="center">
+  <b id="Tweet"></b>
+</p>
+
+<p align="center">
+  <input type="button" name= "Positive" value="Positive" Onclick="annotate('positive')" />
+  <input type="button" name= "Useless" value="Useless" onclick="annotate('useless')" />
+  <input type="button" name= "Negative" value="Negative" onclick="annotate('negative')" />
+  <input type="button" name= "Spam" value="Spam" onclick="annotate('spam')" />
+
+</p>
+
+<p align="center">
+  <br>
+  <input type="button" name="Skip" value="Skip" onclick="annotate('skip')"/>
+</p>
+
+<script type="text/javascript">
+  function annotate(sentiment) {
+
+    var sent = 0;
+    if(sentiment == "positive") sent = 1;
+    else if(sentiment == "negative") sent = -1
+    else if(sentiment == "spam") sent = 2;
+    else if(sentiment == "skip") sent = 3;
+
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function() {
+
+      if (this.readyState == 4 && this.status == 200) {
+        tweet = xhttp.responseText;
+        document.getElementById("Tweet").innerHTML = parseID(tweet);
+      }
+    };
+
+    var twat = tweet.split(" ");
+    var twit = "";
+
+    //build tweet to enter to database
+    for(i=1;i<twat.length;i++) twit = twit + twat[i] + " ";
+
+    var insert = (sent == 3) ? "false" : "true";
+    var id = twat[0];
+
+    var url = "fetch.php?tweet=" + twit + "&id=" + id + "&sentiment=" + sent + "&insert=" + insert;
+
+    // tests what url is being sent to the php script
+    // document.getElementById("erl").innerHTML = url;
+
+    xhttp.open("GET", url , true);
+
+    xhttp.send();
+  }
+
+</script>
+<!-- tests what url is being sent to the php script -->
+<!-- <p>
+  <b id=erl></b>
+</p> -->
+</body>
+</html>
